@@ -56,7 +56,7 @@ export const apiClient = {
 
   try {
     const data = JSON.parse(text);
-    console.log('actual response body:', data); // Show first 500 chars
+    // console.log('actual response body:', data); // Show first 500 chars
     return data;
   } catch (parseError) {
     console.error('Raw response body:', text.substring(0, 500)); // Show first 500 chars

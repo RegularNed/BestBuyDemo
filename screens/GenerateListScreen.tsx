@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {
   View,
   Text,
+  Image,
   TextInput,
   TouchableOpacity,
   FlatList,
@@ -13,25 +14,24 @@ import {
 import { useGenerate } from '../hooks/useGenerate';
 import Icon from 'react-native-vector-icons/Ionicons';   // or MaterialIcons, etc.
 
+type ProductItem = {
+  id: string | number;
+  name: string;           // or title
+  image: string;          // URL to the image
+  // Add other fields you need (price, description, etc.)
+};
+
 export default function GenerateListScreen() {
   const [inputText, setInputText] = useState('');
-  const [itemList, setItems] = useState<string[]>([]);
+  const [selectedLang, setSelectedLang] = useState<'en' | 'fr'>('en');
+
   const { items, loading, error, generate, clear } = useGenerate();
   const handleGenerate = () => {
 
       console.log('hey Fetching');
-      generate('ipad', 'en');
+      generate('RAM', 'en');
       console.log('hey Fetched:', items);
-    // Simulate generating a list based on input
-    const newItems = [
-      `${inputText} - Item 1`,
-      `${inputText} - Item 2`,
-      `${inputText} - Item 3`,
-      `${inputText} - Item 4`,
-    ];
-
-    setItems(newItems);
-    Keyboard.dismiss();        // Optional: hide keyboard after search
+      Keyboard.dismiss();        // Optional: hide keyboard after search
   };
 
   const clearInput = () => {
@@ -39,9 +39,25 @@ export default function GenerateListScreen() {
     setItems([]);              // Optional: clear list when input is cleared
   };
 
-  const renderItem = ({ item }: { item: string }) => (
-    <View style={styles.listItem}>
-      <Text style={styles.listItemText}>{item}</Text>
+  const renderItem = ({ item }: { item: ProductItem }) => (
+    <View style={styles.itemContainer}>
+      {/* Image on the left */}
+      <Image
+        source={{ uri: item.thumbnailImage }}
+        style={styles.itemImage}
+        resizeMode="cover"
+        // defaultSource={require('../../assets/images/placeholder.jpg')
+        onError={(e) => console.log('Image load error for', item.name, e.nativeEvent)}   // ← Very useful!
+        onLoad={() => console.log('Image loaded successfully for', item.name)}
+      />
+
+      {/* Name on the right */}
+      <View style={styles.itemContent}>
+        <Text style={styles.itemName} numberOfLines={2}>
+          {item.name}
+        </Text>
+        {/* You can add more fields here later (price, description, etc.) */}
+      </View>
     </View>
   );
 
@@ -76,22 +92,15 @@ export default function GenerateListScreen() {
       </View>
 
       {/* Generated List */}
-      {itemList.length > 0 && (
-        <FlatList
-          data={items}
-          renderItem={renderItem}
-          keyExtractor={(item, index) => index.toString()}
-          contentContainerStyle={styles.listContainer}
-          showsVerticalScrollIndicator={false}
-        />
-      )}
+      {error && <Text style={styles.errorText}>{error}</Text>}
 
-      {/* Empty state */}
-      {itemList.length === 0 && inputText.length > 0 && (
-        <View style={styles.emptyState}>
-          <Text style={styles.emptyText}>Press Generate to create list</Text>
-        </View>
-      )}
+      <FlatList
+        data={items}
+        keyExtractor={(item, index) => item.id?.toString() || index.toString()}
+        renderItem={renderItem}
+        contentContainerStyle={styles.listContainer}
+        showsVerticalScrollIndicator={false}
+      />
     </SafeAreaView>
   );
 }
@@ -108,6 +117,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderBottomWidth: 1,
     borderBottomColor: '#eee',
+  },
+  itemImage: {
+  width: 80,          // Must have fixed width
+  height: 80,         // Must have fixed height
+  borderRadius: 8,
+  marginRight: 12,
+  backgroundColor: '#f0f0f0',   // ← Helps see the box while debugging
   },
   inputWrapper: {
     flex: 1,
