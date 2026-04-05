@@ -67,7 +67,7 @@ export default function GenerateListScreen() {
             style={styles.textInput}
             value={inputText}
             onChangeText={setInputText}
-            placeholder="Product name or category"
+            placeholder="Search Best Buy"
             placeholderTextColor="#999"
             returnKeyType="search"
             onSubmitEditing={handleGenerate}   // Press "Go" on keyboard also triggers
@@ -82,11 +82,26 @@ export default function GenerateListScreen() {
         </View>
 
         {/* Search Button */}
+        {/*
         <TouchableOpacity 
           style={styles.button} 
           onPress={handleGenerate}>
           <Text style={styles.buttonText}>Search</Text>
         </TouchableOpacity>
+        */}
+
+        {/* Shopping Cart Icon - Clickable */}
+      <TouchableOpacity 
+        style={styles.cartButton}
+        onPress={() => {
+          // TODO: Navigate to cart screen or show cart
+          alert('Shopping Cart Pressed!');
+          // navigation.navigate('Cart');   // if using React Navigation
+        }}
+      >
+        <Icon name="cart-outline" size={28} color="#007AFF" />
+      </TouchableOpacity>
+
       </View>
 
       {/* Generated List */}
@@ -113,7 +128,6 @@ const styles = StyleSheet.create({
   alignItems: 'center',
   paddingHorizontal: 16,
   paddingVertical: 12,
-  backgroundColor: '#fff',
   borderBottomWidth: 1,
   borderBottomColor: '#f0f0f0',
   gap: 12,                    // Space between input and button
@@ -179,6 +193,13 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontWeight: '600',
+  },
+  cartButton: {
+  height: 52,
+  width: 52,
+  justifyContent: 'center',
+  alignItems: 'center',
+  borderRadius: 12,
   },
   listContainer: {
     padding: 16,
