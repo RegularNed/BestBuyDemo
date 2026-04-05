@@ -27,16 +27,12 @@ export default function GenerateListScreen() {
 
   const { items, loading, error, generate, clear } = useGenerate();
   const handleGenerate = () => {
-
-      console.log('hey Fetching');
-      generate('RAM', 'en');
-      console.log('hey Fetched:', items);
+      generate(inputText, 'en');
       Keyboard.dismiss();        // Optional: hide keyboard after search
   };
 
   const clearInput = () => {
     setInputText('');
-    setItems([]);              // Optional: clear list when input is cleared
   };
 
   const renderItem = ({ item }: { item: ProductItem }) => (
@@ -71,7 +67,7 @@ export default function GenerateListScreen() {
             style={styles.textInput}
             value={inputText}
             onChangeText={setInputText}
-            placeholder="Enter something..."
+            placeholder="Product name or category"
             placeholderTextColor="#999"
             returnKeyType="search"
             onSubmitEditing={handleGenerate}   // Press "Go" on keyboard also triggers
@@ -85,9 +81,11 @@ export default function GenerateListScreen() {
           )}
         </View>
 
-        {/* Generate Button */}
-        <TouchableOpacity style={styles.button} onPress={handleGenerate}>
-          <Text style={styles.buttonText}>Generate</Text>
+        {/* Search Button */}
+        <TouchableOpacity 
+          style={styles.button} 
+          onPress={handleGenerate}>
+          <Text style={styles.buttonText}>Search</Text>
         </TouchableOpacity>
       </View>
 
@@ -111,19 +109,44 @@ const styles = StyleSheet.create({
     backgroundColor: '#f8f9fa',
   },
   inputContainer: {
-    flexDirection: 'row',
-    padding: 16,
-    gap: 12,
-    backgroundColor: '#fff',
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
+  flexDirection: 'row',
+  alignItems: 'center',
+  paddingHorizontal: 16,
+  paddingVertical: 12,
+  backgroundColor: '#fff',
+  borderBottomWidth: 1,
+  borderBottomColor: '#f0f0f0',
+  gap: 12,                    // Space between input and button
   },
+  itemContainer: {
+  flexDirection: 'row',           // Keep this
+  alignItems: 'center',           // ← This is the key fix!
+  backgroundColor: '#fff',
+  borderRadius: 12,
+  padding: 12,
+  marginBottom: 12,
+  shadowColor: '#000',
+  shadowOffset: { width: 0, height: 2 },
+  shadowOpacity: 0.1,
+  shadowRadius: 4,
+  elevation: 3,
+},
   itemImage: {
   width: 80,          // Must have fixed width
   height: 80,         // Must have fixed height
   borderRadius: 8,
   marginRight: 12,
   backgroundColor: '#f0f0f0',   // ← Helps see the box while debugging
+  },
+  itemContent: {
+    flex: 1,                        // ← Very important! Let text take remaining space
+    justifyContent: 'center',       // Center text vertically
+  },
+  itemName: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#333',
+    flexShrink: 1,                  // Prevents long text from breaking layout
   },
   inputWrapper: {
     flex: 1,
@@ -150,6 +173,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 20,
     borderRadius: 12,
+    height: 50,
   },
   buttonText: {
     color: '#fff',
