@@ -12,15 +12,11 @@ export function useGenerate() {
     setLoading(true);
     setError(null);
     
-console.trace('Starting data fetch');
-
 try {
       // ← This is where we call apiClient.search
       const data = await apiClient.search(language, inputText);
       const productsArray = data?.products ?? [];        // Safe access
 
-      console.log("these are the products: ", productsArray)
-    // Optional: Add extra safety / transformation
     if (!Array.isArray(productsArray)) {
       console.warn('API did not return "products" as an array:', data);
       setItems([]);
@@ -30,7 +26,7 @@ try {
 
     } catch (err: any) {
       setError(err.message || 'Failed to generate results. Please try again.');
-      console.error('API Error:', err);
+      console.error('API Error');
     } finally {
       setLoading(false);
     }

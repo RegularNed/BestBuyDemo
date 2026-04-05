@@ -10,15 +10,14 @@ import {
   SafeAreaView,
   Keyboard,
 } from 'react-native';
-
+import { router } from 'expo-router';
 import { useGenerate } from '../hooks/useGenerate';
 import Icon from 'react-native-vector-icons/Ionicons';   // or MaterialIcons, etc.
 
 type ProductItem = {
-  id: string | number;
-  name: string;           // or title
-  image: string;          // URL to the image
-  // Add other fields you need (price, description, etc.)
+  sku: string | number;
+  name: string;
+  image: string;
 };
 
 export default function GenerateListScreen() {
@@ -36,7 +35,17 @@ export default function GenerateListScreen() {
   };
 
   const renderItem = ({ item }: { item: ProductItem }) => (
-    <View style={styles.itemContainer}>
+    <TouchableOpacity 
+      style={styles.itemContainer}
+      onPress={() => router.push({
+        pathname: `/detail/${item.sku}`,
+        params: {
+          lang: selectedLang,
+        }
+        })
+      }
+      activeOpacity={0.7}
+    >
       {/* Image on the left */}
       <Image
         source={{ uri: item.thumbnailImage }}
@@ -44,7 +53,7 @@ export default function GenerateListScreen() {
         resizeMode="cover"
         // defaultSource={require('../../assets/images/placeholder.jpg')
         onError={(e) => console.log('Image load error for', item.name, e.nativeEvent)}   // ← Very useful!
-        onLoad={() => console.log('Image loaded successfully for', item.name)}
+        // onLoad={() => console.log('Image loaded successfully for', item.name)}
       />
 
       {/* Name on the right */}
@@ -54,7 +63,7 @@ export default function GenerateListScreen() {
         </Text>
         {/* You can add more fields here later (price, description, etc.) */}
       </View>
-    </View>
+    </TouchableOpacity>
   );
 
   return (

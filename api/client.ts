@@ -36,7 +36,6 @@ export const apiClient = {
     url.searchParams.append('lang', language);
     url.searchParams.append('query', query.trim());
 
-    console.trace('hey am I in this url thing: ', url);
     const response = await fetch(url.toString(), {
       method: 'GET',                    // Most search APIs use GET
       headers: {
