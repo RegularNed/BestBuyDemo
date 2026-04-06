@@ -11,14 +11,15 @@ import {
   Text,
   SafeAreaView,
 } from 'react-native';
+
+
+import config from '../../config';
 import { useLocalSearchParams, Stack} from 'expo-router';
 import { Video, ResizeMode } from 'expo-av';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const SIDE_MARGIN = 20;
 const ITEM_WIDTH = SCREEN_WIDTH - SIDE_MARGIN * 2;
-
-const BASE_URL = 'http://www.bestbuy.ca';
 
 type MediaItem = {
   url: string;
@@ -29,6 +30,7 @@ type ProductDetail = {
   sku: string;
   name: string;
   media: MediaItem[];
+  thumbnailUrl: string,
   description?: string;
   price?: number;
   // add other fields your detail API returns
@@ -53,7 +55,7 @@ export default function DetailScreen() {
       try {
         setLoading(true);
         // Replace with your actual detail API endpoint
-        const url = new URL(`/api/v2/json/product/${sku.trim()}`, BASE_URL);
+        const url = new URL(`/api/v2/json/product/${sku.trim()}`, config.api.baseUrl);
 
         url.searchParams.append('lang', lang);        // 'en' or 'fr'i
         
@@ -85,6 +87,7 @@ export default function DetailScreen() {
                       }))
                     : [],
                 description: data?.shortDescription ?? data?.longDescription ?? '',
+                thumbnailUrl: data?.shortDescription ?? data?.longDescription ?? '',
                 price: data?.salePrice 
                     ? Number(data.salePrice) 
                     : data?.regularPrice 
@@ -145,15 +148,7 @@ export default function DetailScreen() {
         <ActivityIndicator size="large" color="#007AFF" />
       </View>
     );
-  }
-
-  if (error || !product) {
-    return (
-      <View style={styles.center}>
-        <Text style={styles.error}>{error || 'Product not found'}</Text>
-      </View>
-    );
-  }
+  } else {
 
   return (
     <SafeAreaView style={styles.container}>
@@ -210,6 +205,16 @@ export default function DetailScreen() {
     </ScrollView>
     </SafeAreaView>
     );
+
+  if (error || !product) {
+    return (
+      <View style={styles.center}>
+        <Text style={styles.error}>{error || 'Product not found'}</Text>
+      </View>
+    );
+    }
+  }
+
 }
 
 const styles = StyleSheet.create({

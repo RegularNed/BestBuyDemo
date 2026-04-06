@@ -1,27 +1,6 @@
 // src/api/client.ts
 import { fetch } from 'expo/fetch';   // Recommended in Expo for consistency
-
-const BASE_URL = process.env.EXPO_PUBLIC_API_URL || 'http://www.bestbuy.ca';
-// const url = new URL('/todos/1', 'https://dummyjson.com/products');
-//
-// export const apiClient = {
-//
-//   async search(language: 'en' | 'fr', query: string): Promise<any> {
-//
-// const response = await fetch(url.toString(), {
-//   method: 'GET',
-//   headers: { 'Accept': 'application/json' },
-// });
-//
-// if (!response.ok) {
-//   throw new Error(`HTTP error! status: ${response.status}`);
-// }
-//
-// const data = await response.json();
-// console.log('Test API Success:', data);
-// return data;
-// }
-// };
+import config from '../config';
 
 export const apiClient = {
  async search(language: 'en' | 'fr', query: string): Promise<any> {
@@ -30,7 +9,7 @@ export const apiClient = {
     }
 
     // Build the URL with query parameters cleanly
-    const url = new URL('/api/v2/json/search', BASE_URL);   // ← Change '/search' to your actual endpoint path
+    const url = new URL('/api/v2/json/search', config.api.baseUrl);   // ← Change '/search' to your actual endpoint path
 
     // Add the two required fields as query parameters
     url.searchParams.append('lang', language);
