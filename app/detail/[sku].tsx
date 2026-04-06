@@ -152,11 +152,17 @@ export default function DetailScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={styles.contentContainer}
+        showsVerticalScrollIndicator={true}
+        bounces={true}                    // nice iOS overscroll feel
+      >
       <View style={styles.container}>
 
         {/* Product Info */}
         <View style={styles.infoContainer}>
-          <Text style={styles.title} numberOfLines={2}>{product?.name}</Text>
+          <Text style={styles.title}>{product?.name}</Text>
           {/* price, description, etc. */}
         </View>
         {/* Horizontal Media Scroller */}
@@ -166,7 +172,7 @@ export default function DetailScreen() {
           keyExtractor={(item, index) => `media-${index}`}
           horizontal
           pagingEnabled                // Makes it snap like a carousel
-          snapToInterval={SCREEN_WIDTH}
+          snapToInterval={ITEM_WIDTH}
           showsHorizontalScrollIndicator={false}
           renderItem={renderMedia}
           snapToAlignment="center"
@@ -187,6 +193,7 @@ export default function DetailScreen() {
       </View>
 
       </View>
+    </ScrollView>
     </SafeAreaView>
     );
 }
@@ -217,7 +224,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',       // Center text vertically
   },
   mediaItem: {
-    width: 20,            // Full screen width per item
+    width: ITEM_WIDTH,            // Full screen width per item
     height: 380,
     backgroundColor: '#000',
   },
