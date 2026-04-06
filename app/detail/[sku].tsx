@@ -6,12 +6,16 @@ import {
   Image,
   Dimensions,
   StyleSheet,
+  ScrollView,
   Text,
+  SafeAreaView,
 } from 'react-native';
 import { useLocalSearchParams, Stack} from 'expo-router';
 import { Video, ResizeMode } from 'expo-av';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
+const SIDE_MARGIN = 20;
+const ITEM_WIDTH = SCREEN_WIDTH - SIDE_MARGIN * 2;
 
 const BASE_URL = 'http://www.bestbuy.ca';
 
@@ -123,7 +127,6 @@ export default function DetailScreen() {
       );
     }
 
-    // Fallback
     return (
       <View style={styles.fallback}>
         <Text>Unsupported media</Text>
@@ -148,47 +151,78 @@ export default function DetailScreen() {
   }
 
   return (
+    <SafeAreaView style={styles.container}>
       <View style={styles.container}>
+
+        {/* Product Info */}
+        <View style={styles.infoContainer}>
+          <Text style={styles.title} numberOfLines={2}>{product?.name}</Text>
+          {/* price, description, etc. */}
+        </View>
         {/* Horizontal Media Scroller */}
+        <View style={styles.carouselContainer}>
         <FlatList
           data={product?.media || []}
           keyExtractor={(item, index) => `media-${index}`}
           horizontal
           pagingEnabled                // Makes it snap like a carousel
+          snapToInterval={SCREEN_WIDTH}
           showsHorizontalScrollIndicator={false}
           renderItem={renderMedia}
           snapToAlignment="center"
           decelerationRate="fast"
-          style={styles.mediaList}
         />
-
-        {/* Optional: Dots indicator */}
-        {/* You can add a dot indicator here later */}
-
-        {/* Product Info */}
-        <View style={styles.infoContainer}>
-          <Text style={styles.title}>{product?.name}</Text>
-          {/* price, description, etc. */}
         </View>
+
+      <View style={styles.infoContainer}>
+        <Text style={styles.title}>
+          {`\$${product?.price}`}
+        </Text>
       </View>
+
+      <View style={styles.infoContainer}>
+        <Text style={styles.itemName}>
+          {product?.description || 'No description available.'}
+        </Text>
+      </View>
+
+      </View>
+    </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
+
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#f8f9fa',
+  },
+  scrollView: {
+    flex: 1,
   },
   mediaList: {
     height: 380,                    // Adjust height as needed
   },
+  carouselContainer: {
+    paddingHorizontal: SIDE_MARGIN,   // This creates the margin on left & right
+  },
+  itemName: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#333',
+    flexShrink: 1,                  // Prevents long text from breaking layout
+  },
+  itemContent: {
+    flex: 1,                        // ← Very important! Let text take remaining space
+    justifyContent: 'center',       // Center text vertically
+  },
   mediaItem: {
-    width: SCREEN_WIDTH,            // Full screen width per item
+    width: 20,            // Full screen width per item
     height: 380,
     backgroundColor: '#000',
   },
   fallback: {
-    width: SCREEN_WIDTH,
+    width: ITEM_WIDTH,
     height: 380,
     backgroundColor: '#f0f0f0',
     justifyContent: 'center',
@@ -201,4 +235,17 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
   },
+  itemContainer: {
+  flexDirection: 'row',           // Keep this
+  alignItems: 'center',           // ← This is the key fix!
+  backgroundColor: '#fff',
+  borderRadius: 12,
+  padding: 12,
+  marginBottom: 12,
+  shadowColor: '#000',
+  shadowOffset: { width: 0, height: 2 },
+  shadowOpacity: 0.1,
+  shadowRadius: 4,
+  elevation: 3,
+},
 });
