@@ -47,13 +47,10 @@ export const useCartStore = create<CartStore>((set, get) => ({
     }
 
       const newTotalItems = newItems.reduce((sum, item) => sum + item.quantity, 0);
-      console.log('newTotalItems length:', newTotalItems);
       const newTotalPrice = newItems.reduce(
         (sum, item) => sum + (item.price || 0) * item.quantity,
         0
       );
-
-      console.log('newTotalPrice :', newTotalPrice);
 
       return {
         items: newItems,

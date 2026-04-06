@@ -7,9 +7,9 @@ import {
   TouchableOpacity,
   FlatList,
   StyleSheet,
-  SafeAreaView,
   Keyboard,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 import { useGenerate } from '../hooks/useGenerate';
 import Icon from 'react-native-vector-icons/Ionicons';   // or MaterialIcons, etc.

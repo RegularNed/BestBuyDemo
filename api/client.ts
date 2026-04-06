@@ -23,8 +23,6 @@ export const apiClient = {
       },
     });
     
-  console.log('Response status:', response.status, response.statusText);
-
   // First, always read as text so we can inspect it
   const text = await response.text();
 
@@ -34,7 +32,6 @@ export const apiClient = {
 
   try {
     const data = JSON.parse(text);
-    // console.log('actual response body:', data); // Show first 500 chars
     return data;
   } catch (parseError) {
     console.error('Raw response body:', text.substring(0, 500)); // Show first 500 chars

@@ -1,50 +1,53 @@
-# Welcome to your Expo app 👋
+# Best Buy Demo
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+This is a React Native mobile app built with Expo that allows users to search products, view detailed information with media carousel, and add items to a shopping cart.
 
-## Get started
+## Features
 
-1. Install dependencies
+- Search / Generate product lists
+- Product detail view with image & video support
+- Horizontal swipeable media carousel
+- Shopping cart with quantity management
+- Add to cart from detail screen
 
-   ```bash
-   npm install
-   ```
+## Tech Stack
 
-2. Start the app
+- **Framework**: Expo (React Native)
+- **Routing**: Expo Router (File-based)
+- **State Management**: Zustand
+- **UI**: React Native + Expo components
+- **Media**: `expo-av` for video support
+- **Navigation**: Native Stack
 
-   ```bash
-   npx expo start
-   ```
+## Dependencies
 
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
+### Core Dependencies
 ```bash
-npm run reset-project
+expo
+expo-router
+expo-av
+expo-build-properties
+expo-dev-client
+react-native-safe-area-context
+zustand
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### Deployment
 
-## Learn more
+Clone this repo, then log into your Expo account:
 
-To learn more about developing your project with Expo, look at the following resources:
+```bash
+npm install -g eas-cli
+eas login
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+Install your dependencies, then follow the prompts to deploy the app:
 
-## Join the community
+```bash
+npm install
+npx expo start
+```
 
-Join our community of developers creating universal apps.
+## Known Issues
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- The app does not properly respect the front camera cutout on certain versions of Android OS 

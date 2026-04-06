@@ -1,6 +1,7 @@
 // app/cart.tsx
 import React from 'react';
-import { View, Text, FlatList, Image, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
+import { View, Text, FlatList, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useCartStore } from '../store/shoppingCart';
 
 export default function CartScreen() {

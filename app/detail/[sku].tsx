@@ -9,9 +9,9 @@ import {
   ScrollView,
   TouchableOpacity,
   Text,
-  SafeAreaView,
 } from 'react-native';
 
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import config from '../../config';
 import { useLocalSearchParams, Stack} from 'expo-router';
@@ -44,7 +44,6 @@ export default function DetailScreen() {
   }>();
 
   const addToCart = () => {
-    console.log(`added ${product.name} to cart!`)
     if (!product) return;
 
     useCartStore.getState().addItem({
@@ -292,5 +291,5 @@ const styles = StyleSheet.create({
   shadowOpacity: 0.1,
   shadowRadius: 4,
   elevation: 3,
-},
+  },
 });
