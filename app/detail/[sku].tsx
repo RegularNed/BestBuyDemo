@@ -7,6 +7,7 @@ import {
   Dimensions,
   StyleSheet,
   ScrollView,
+  TouchableOpacity,
   Text,
   SafeAreaView,
 } from 'react-native';
@@ -38,6 +39,10 @@ export default function DetailScreen() {
     sku: string;
     lang?: 'en' | 'fr';
   }>();
+
+  const addToCart = () => {
+    console.log(`added ${product.name} to cart!`)
+  };
 
   const [product, setProduct] = useState<ProductDetail | null>(null);
   const [loading, setLoading] = useState(true);
@@ -193,6 +198,15 @@ export default function DetailScreen() {
       </View>
 
       </View>
+
+      <View style={styles.infoContainer}>
+      <TouchableOpacity 
+        style={styles.button} 
+        onPress={addToCart}>
+        <Text style={styles.buttonText}>Add to Cart</Text>
+      </TouchableOpacity>
+      </View>
+
     </ScrollView>
     </SafeAreaView>
     );
@@ -206,6 +220,19 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flex: 1,
+  },
+  button: {
+    backgroundColor: '#007AFF',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    borderRadius: 12,
+    height: 50,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
   },
   mediaList: {
     height: 380,                    // Adjust height as needed
