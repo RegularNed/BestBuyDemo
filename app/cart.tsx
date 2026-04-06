@@ -1,6 +1,6 @@
 // app/cart.tsx
 import React from 'react';
-import { View, Text, FlatList, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, FlatList, Image, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
 import { useCartStore } from '../store/shoppingCart';
 
 export default function CartScreen() {
@@ -31,6 +31,7 @@ export default function CartScreen() {
   );
 
   return (
+  <SafeAreaView style={styles.container}>
     <View style={styles.container}>
       <Text style={styles.title}>My Cart ({totalItems})</Text>
 
@@ -38,18 +39,22 @@ export default function CartScreen() {
         data={items}
         renderItem={renderCartItem}
         keyExtractor={(item) => item.sku}
-        ListEmptyComponent={<Text style={styles.emptyText}>Your cart is empty</Text>}
+        ListEmptyComponent={
+        <View>
+          <Text style={styles.emptyCart}>
+          Your cart is empty</Text>
+          </View>
+          }
       />
 
-      {items.length > 0 && (
-        <View style={styles.footer}>
-          <Text style={styles.total}>Total: ${totalPrice.toFixed(2)}</Text>
-          <TouchableOpacity style={styles.checkoutButton}>
-            <Text style={styles.checkoutText}>Proceed to Checkout</Text>
-          </TouchableOpacity>
+    </View>
+
+    {items.length > 0 && (
+        <View style={styles.bottomContainer}>
+          <Text style={styles.title}>Total: ${totalPrice.toFixed(2)}</Text>
         </View>
       )}
-    </View>
+  </SafeAreaView>
   );
 }
 
@@ -64,6 +69,14 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: '#fff',
   },
+  emptyCart: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    padding: 16,
+    backgroundColor: '#fff',
+    textAlign: 'center',           
+    marginTop: 100,
+  },
   cartItem: {
     flexDirection: 'row',
     backgroundColor: '#fff',
@@ -71,6 +84,19 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     borderRadius: 12,
     padding: 12,
+  },
+  bottomContainer: {
+    backgroundColor: '#fff',
+    padding: 16,
+    paddingBottom: 24,          // Extra padding for home indicator
+    borderTopWidth: 1,
+    borderTopColor: '#eee',
+    // Optional: add shadow
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: -2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 5,
   },
   itemImage: {
     width: 80,
@@ -91,5 +117,4 @@ const styles = StyleSheet.create({
     color: '#007AFF',
     marginTop: 4,
   },
-  // ... add other styles as needed
 });

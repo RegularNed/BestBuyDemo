@@ -68,8 +68,6 @@ export default function DetailScreen() {
 
         url.searchParams.append('lang', lang);        // 'en' or 'fr'i
         
-        console.trace('retrieving this product: ', url);
-        
         const response = await fetch(url.toString(), {
             method: 'GET',                    // Most search APIs use GET
             headers: {
@@ -104,7 +102,6 @@ export default function DetailScreen() {
                       : undefined,              
                 };
           setProduct(mappedProduct);
-          console.log('retrieved:', mappedProduct);
         } catch (parseError) {
           console.error('Raw response body:', text.substring(0, 500));
           throw new Error(`Invalid JSON response from server: ${parseError.message}`);
