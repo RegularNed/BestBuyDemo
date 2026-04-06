@@ -8,7 +8,7 @@ import {
   StyleSheet,
   Text,
 } from 'react-native';
-import { useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams, Stack} from 'expo-router';
 import { Video, ResizeMode } from 'expo-av';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
@@ -71,7 +71,7 @@ export default function DetailScreen() {
                 name: data?.name ?? '',
                 media: Array.isArray(data.additionalMedia) 
                     ? data.additionalMedia.map((item: any) => ({
-                        mediaUrlurl: item.url ?? '',
+                        url: item.url ?? '',
                         mimeType: item.mimeType ?? item.contentType ?? 'Image',
                       }))
                     : [],
@@ -83,7 +83,7 @@ export default function DetailScreen() {
                       : undefined,              
                 };
           setProduct(mappedProduct);
-          console.log('retrieved:', data);
+          console.log('retrieved:', mappedProduct);
         } catch (parseError) {
           console.error('Raw response body:', text.substring(0, 500));
           throw new Error(`Invalid JSON response from server: ${parseError.message}`);
@@ -101,7 +101,7 @@ export default function DetailScreen() {
     const renderMedia = ({ item }: { item: MediaItem }) => {
     const mime = item.mimeType.toLowerCase();
 
-    if (mime.startsWith('Image')) {
+    if (mime.startsWith('image')) {
       return (
         <Image
           source={{ uri: item.url }}
@@ -111,7 +111,7 @@ export default function DetailScreen() {
       );
     }
 
-    if (mime.startsWith('Video')) {
+    if (mime.startsWith('video')) {
       return (
         <Video
           source={{ uri: item.url }}
@@ -175,12 +175,30 @@ export default function DetailScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#fff' },
-  center: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  detailImage: { width: '100%', height: 300 },
-  content: { padding: 16 },
-  title: { fontSize: 24, fontWeight: 'bold', marginBottom: 8 },
-  price: { fontSize: 20, color: '#007AFF', fontWeight: '600', marginBottom: 16 },
-  description: { fontSize: 16, lineHeight: 24, color: '#444' },
-  error: { color: 'red', fontSize: 16 },
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  mediaList: {
+    height: 380,                    // Adjust height as needed
+  },
+  mediaItem: {
+    width: SCREEN_WIDTH,            // Full screen width per item
+    height: 380,
+    backgroundColor: '#000',
+  },
+  fallback: {
+    width: SCREEN_WIDTH,
+    height: 380,
+    backgroundColor: '#f0f0f0',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  infoContainer: {
+    padding: 16,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+  },
 });
