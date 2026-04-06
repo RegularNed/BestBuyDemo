@@ -50,4 +50,4 @@ npx expo start
 
 ## Known Issues
 
-- The app does not properly respect the front camera cutout on certain versions of Android OS 
+- Certain versions of Android receive an INTERNAL_ERROR from server
