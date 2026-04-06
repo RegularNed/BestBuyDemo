@@ -16,6 +16,7 @@ import {
 import config from '../../config';
 import { useLocalSearchParams, Stack} from 'expo-router';
 import { Video, ResizeMode } from 'expo-av';
+import { useCartStore } from '../../store/shoppingCart';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const SIDE_MARGIN = 20;
@@ -44,6 +45,14 @@ export default function DetailScreen() {
 
   const addToCart = () => {
     console.log(`added ${product.name} to cart!`)
+    if (!product) return;
+
+    useCartStore.getState().addItem({
+      sku: product.sku,
+      name: product.name,
+      image: product.media[0]?.url || '',
+      price: product.price,
+    });
   };
 
   const [product, setProduct] = useState<ProductDetail | null>(null);

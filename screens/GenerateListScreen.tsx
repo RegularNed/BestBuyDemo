@@ -90,21 +90,13 @@ export default function GenerateListScreen() {
           )}
         </View>
 
-        {/* Search Button */}
-        {/*
-        <TouchableOpacity 
-          style={styles.button} 
-          onPress={handleGenerate}>
-          <Text style={styles.buttonText}>Search</Text>
-        </TouchableOpacity>
-        */}
 
         {/* Shopping Cart Icon - Clickable */}
       <TouchableOpacity 
         style={styles.cartButton}
         onPress={() => {
           // TODO: Navigate to cart screen or show cart
-          alert('Shopping Cart Pressed!');
+          router.push('/cart');
           // navigation.navigate('Cart');   // if using React Navigation
         }}
       >
@@ -189,19 +181,6 @@ const styles = StyleSheet.create({
   },
   clearIcon: {
     padding: 4,
-  },
-  button: {
-    backgroundColor: '#007AFF',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 20,
-    borderRadius: 12,
-    height: 50,
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
   },
   cartButton: {
   height: 52,
