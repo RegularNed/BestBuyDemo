@@ -4,10 +4,11 @@
 This is a React Native mobile app built with Expo that allows users to search products, view detailed information with media carousel, and add items to a shopping cart.
 
 ## Screenshots
-
+<p align="center">
 <img src="screenshots/search.png" width="32%" alt="Screenshot 1">
 <img src="screenshots/details.png" width="32%" alt="Screenshot 2">
 <img src="screenshots/cart.png" width="32%" alt="Screenshot 3">
+</p>
 
 ## Features
 
