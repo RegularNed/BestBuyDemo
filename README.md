@@ -1,6 +1,18 @@
 # Best Buy Demo
 
+
 This is a React Native mobile app built with Expo that allows users to search products, view detailed information with media carousel, and add items to a shopping cart.
+
+## Screenshots
+
+### Search
+![Light mode screenshot](screenshots/search.png)
+
+### Product Details
+![Dark mode screenshot](screenshots/details.png)
+
+### Cart
+![Demo](screenshots/cart.png)
 
 ## Features
 
@@ -47,6 +59,8 @@ Install your dependencies, then follow the prompts to deploy the app:
 npm install
 npx expo start
 ```
+
+
 
 ## Known Issues
 
