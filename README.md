@@ -5,14 +5,9 @@ This is a React Native mobile app built with Expo that allows users to search pr
 
 ## Screenshots
 
-### Search
-![Light mode screenshot](screenshots/search.png)
-
-### Product Details
-![Dark mode screenshot](screenshots/details.png)
-
-### Cart
-![Demo](screenshots/cart.png)
+<img src="screenshots/search.png" width="32%" alt="Screenshot 1">
+<img src="screenshots/details.png" width="32%" alt="Screenshot 2">
+<img src="screenshots/cart.png" width="32%" alt="Screenshot 3">
 
 ## Features
 
